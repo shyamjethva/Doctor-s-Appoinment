@@ -1,0 +1,35 @@
+import React, { useContext } from 'react'
+import { assets } from '../assets/assets'
+import { AdminContext } from '../Context/AdminContext'
+import { useNavigate } from 'react-router-dom'
+import { DoctorContext } from '../Context/DoctorContext'
+
+const Navbar = () => {
+
+    const { atoken, setAtoken } = useContext(AdminContext)
+    const { dToken, setDToken } = useContext(DoctorContext)
+
+    const navigate = useNavigate()
+
+    const logout = () => {
+        navigate('/')
+        atoken && setAtoken('')
+        atoken && localStorage.removeItem('atoken')
+        dToken && setDToken('')
+        dToken && localStorage.removeItem('dToken')
+
+
+
+    }
+    return (
+        <div className='flex justify-between items-center sm:px-5 py-3 border-b bg-white'>
+            <div className='flex items-center gap-2 text-xs'>
+                <img className='w-36 sm:w-40 cursor-pointer' src={assets.admin_logo} alt="" />
+                <p className='border px-2.5 py-0.5  rounded-full border-gray-500 text-gray-600'>{atoken ? 'Admin' : 'Doctor'}  </p>
+            </div>
+            <button onClick={logout} className='bg-primary text-white px-6 py-2 rounded-full hover:bg-blue-700'>Logoout</button>
+        </div>
+    )
+}
+
+export default Navbar
